@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Home</title>    
+    <link rel="Stylesheet" href="jquery.mobile-1.3.2.min.css" type="text/css" />
+	<link rel="Stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+	
+	<div id="mainPage" data-role="page">
+		<div data-role="header">
+			<a 	id="inventory" 
+				href="#laneEditor" data-rel="popup" 
+				data-icon="grid" 
+				data-theme="b" 
+				data-role="button">Lanes</a>
+			<h1>
+				Page Title
+			</h1>
+			<a href="#categoryEditor" 
+				id="categories"
+				data-role="button"
+				data-rel="popup"
+				data-theme="b" 				
+				data-icon="star">Categories</a>
+		</div>
+		<div data-role="content">		
+		
+			<div class="panel" data-bind="foreach: kanban.panel.lanes">
+				<div class="lane">
+					<div class="laneDescription ellipsisText" data-bind="text: description"></div>
+					<div class="taskList" data-bind="sortable: tasks">
+						<div 	class="task ui-corner-all" 
+								data-bind="style: {color: category().inverted(), 
+													backgroundColor: category().color(), 
+													backgroundImage: 'none', 
+													textShadow: '0 0 0'}">
+							<h5 class="ellipsisText" data-bind="text: title"></h3>
+							<span class="breakWord" data-bind="text: description"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div data-role="popup" id="laneEditor" data-dismissible="false" data-position-to="window">
+				 <a href="#" 
+					data-rel="back" 
+					data-role="button" 
+					data-theme="b" 
+					data-icon="delete" 
+					data-iconpos="notext" 
+					class="ui-btn-right">Close</a>
+				<div class="editorContent ui-corner-all">
+					<div>
+						<h2>Lane Editor</h2>
+					</div>
+					<div data-bind="foreach: kanban.panel.lanes">
+						<div >	
+							<hr/>
+							<div class="laneEditorControls">
+								<a href="#" 
+									data-role="button" 
+									data-icon="delete" 
+									data-mini="true" 
+									data-iconpos="notext"
+									data-theme="b" 
+									data-bind="click: function(data,event){kanban.deleteLane($index,data,event);}"></a>
+								<a href="#" 
+									data-role="button" 
+									data-icon="arrow-u" 
+									data-mini="true" 
+									data-iconpos="notext"
+									data-theme="b" 
+									data-bind="click: function(data,event){kanban.moveLane($index,false);}"></a>
+								<a href="#" 
+									data-role="button" 
+									data-icon="arrow-d" 
+									data-mini="true" 
+									data-iconpos="notext"
+									data-theme="b" 
+									data-bind="click: function(data,event){kanban.moveLane($index,true);}"></a>
+							</div>
+							<div class="lableInput">
+								<label>Name:</label >
+								<input type="text" data-bind="value: description"></input>
+							</div>
+							<div class="lableInput">
+								<label>Limit:</label >
+								<input type="number" data-bind="value: limit"></input>
+							</div>
+						</div>
+					</div>
+					<a href="#" 
+						class="addButton"
+						data-role="button" 
+						data-icon="add" 
+						data-mini="true" 
+						data-theme="b" 
+						data-iconpos="top"
+						data-bind="click: kanban.addLane">Add Lane</a>
+				</div>
+			</div>			
+			
+			<div data-role="popup" id="taskContext">
+				 <a href="#" 
+					data-rel="back" 
+					data-role="button" 
+					data-theme="b" 
+					data-icon="delete" 
+					data-iconpos="notext" 
+					class="ui-btn-right">Close</a>
+				<div class="taskContextContent">																	
+					<a href="#" 
+						data-role="button" 
+						data-icon="edit" 
+						data-mini="false" 
+						data-theme="b" 
+						data-bind="	visible: kanban.taskContextType() == kanban.taskContextTypes.task, click: kanban.editTask">Edit</a>
+					<a href="#" 
+						data-role="button" 
+						data-icon="delete" 
+						data-mini="false" 
+						data-theme="b" 
+						data-bind="	visible: kanban.taskContextType()==kanban.taskContextTypes.task, click: kanban.deleteTask">Delete</a>
+					<a href="#" 
+						data-role="button" 
+						data-icon="add" 
+						data-mini="false" 
+						data-theme="b" 
+						data-bind="click: kanban.addTask">Add</a>					
+				</div>
+			</div>	
+			
+			<div data-role="popup" id="taskEditor" data-dismissible="false" data-position-to="window">
+				 <a href="#" 
+					data-rel="back" 
+					data-role="button" 
+					data-theme="b" 
+					data-icon="delete" 
+					data-iconpos="notext" 
+					class="ui-btn-right">Close</a>
+				<form id="myForm" action="" method="post" class="editorContent ui-corner-all" data-bind="with: kanban.currentTask">
+					<div>
+						<h2>Task Editor</h2>
+					</div>					
+						<div class="lableInput">
+							<label>Title:</label >
+							<input type="text" tabindex="-1" required data-bind="value: title"></input>
+						</div>
+						<div class="lableInput">
+							<label>Descr.:</label >
+							<input type="text" tabindex="-1" required data-bind="value: description"></input>
+						</div>
+						<div class="lableInput">
+							<label>Category:</label >
+							<select required tabindex="-1"	data-bind="	value: $data.category, 
+												options: kanban.panel.categories, 
+												optionsText: 'name',	
+												optionsCaption: 'Choose...'"></select>							
+						</div>
+						<input type="numeric" onfocus="javascript:$('#myForm').submit();" style="position:absolute;top:-999999px;"></input>
+					<a href="#" 
+						data-role="button" 
+						data-icon="add" 
+						data-mini="true" 
+						data-theme="b" 
+						data-bind="click: kanban.closeTaskEditor">Done</a>
+				</form>
+			</div>			
+			
+			<div data-role="popup" id="categoryEditor" data-dismissible="false" data-position-to="window">
+				 <a href="#" 
+					data-rel="back" 
+					data-role="button" 
+					data-theme="b" 
+					data-icon="delete" 
+					data-iconpos="notext" 
+					class="ui-btn-right">Close</a>
+				<div class="editorContent ui-corner-all">
+					<div>
+						<h2>Category Editor</h2>
+					</div>		
+						<div data-bind="foreach: kanban.panel.categories">
+							<div>
+								<a href="#"
+									class = "categoryButton"
+									data-role="button" 
+									data-icon="arrow-r"  
+									data-theme="b" 							
+									data-mini="true"
+									data-bind="click: toggleExpanded">										
+										<span data-bind="text: name"></span>
+								</a>
+							</div>							
+							<div data-bind="visible: expanded">
+								<div class="lableInput">
+									<label>Name:</label >
+									<input type="text" data-bind="value: name"></input>
+								</div>
+								<div class="lableInput">
+									<label>Color:</label >
+									<input type="text" data-bind="value: color,
+										style: {color: inverted, 
+												backgroundColor: color, 
+												backgroundImage: 'none', 
+												textShadow: '0 0 0'}"></input>
+								</div>
+								 <a href="#" 
+									class="addButton"
+									data-role="button" 
+									data-theme="a" 
+									data-icon="delete"
+									data-mini="true"
+									data-bind="click: function(data,event){ kanban.deleteCategory($index, data, event);}">Delete</a>
+							</div>
+						</div>
+					<a href="#" 
+						class="addButton"
+						data-role="button" 
+						data-icon="add" 
+						data-mini="true" 
+						data-theme="b" 
+						data-iconpos="top"
+						data-bind="click: kanban.addNewCategory">Add new</a>
+				</div>
+			</div>			
+						
+		</div>
+		
+	</div>
+	
+	
+</body>
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="jquery.mobile-1.3.2.js"></script>
+  <script  type="text/javascript" src="jquery-ui.js"></script>
+  <script type="text/javascript" src="jquery-touch.js"></script>
+  <script type="text/javascript" src="knockout.js"></script>
+  <script type="text/javascript" src="knockout-sortable.js"></script>
+  <script type="text/javascript" src="script.js"></script>
+</html>

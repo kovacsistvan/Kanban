@@ -1,0 +1,157 @@
+body{
+	width:100%;
+	height:100%;
+	overflow: hidden;			
+}
+
+ html, body {
+    overflow-x: hidden !important;
+    position: relative !important;
+ }
+
+.ui-page{
+	background: linear-gradient(#3C3C3C, #111111) repeat scroll 0;
+}
+
+.ui-content{
+	padding: 0px;
+	height: 100%;
+    position: absolute;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+
+#laneEditor-popup, #categoryEditor-popup{
+	height: 70%;
+}
+
+.ui-input-text{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.panel{
+	display: table;
+    table-layout: fixed;
+    width:100%;
+    height:100%;
+	text-align:center;
+	
+	color: #FFFFFF;
+    text-shadow: 0 1px 0 #777777;
+}
+
+.lane{
+	padding:0px;
+    border-right: 1px solid white;
+	display: table-cell;
+    height:1000px;
+}
+
+.lane:last-child{
+	border: 0px;
+}
+
+.laneDescription{
+	background: linear-gradient(#6C6C6C, #111111) repeat scroll 0 center transparent;
+    font-weight: bold;
+    height: 2em;
+    line-height: 2em;
+    margin: 5px;
+}
+
+#laneEditor, #categoryEditor{
+	height:100%;	
+}
+
+.laneEditorControls{
+	display: table;
+    table-layout: fixed;
+    width:100%;   
+	text-align:center;	
+	margin-bottom: 5px;
+}
+
+.laneEditorControls a{
+	display: table-cell;
+	margin: 5px 0px;
+}
+
+.laneEditorControls a span .ui-icon{
+	display: inline-block;
+    text-align: center;
+	float: none !important;
+}
+
+.editorContent{	    
+    background: linear-gradient(#ACACAC, #515151) repeat scroll 0 center transparent;
+    color: #555555;
+    height: 100%;
+    overflow-y: auto;
+    text-shadow: 0 1px #111111;
+    width: 17em;
+}
+
+.editorContent div h2{
+	text-align:center;
+}
+
+.addButton{
+	width:60%;
+	min-width:130px;
+	left:20%;
+	right:20%;
+}
+
+.lableInput{
+	width:90%;
+	left:5%;
+	right:5%;
+}
+
+.lableInput label{
+	display: table-cell;
+	vertical-align: middle; 
+	padding-right:2%; 
+	width:28%;
+	text-align:right;
+}
+
+.lableInput div{	
+	display: table-cell;
+}
+
+.task{
+	border: 1px solid white;
+    margin: 5px;
+	min-height: 35px;
+}
+
+.task h5{
+	margin: 3px;
+	border-bottom: 1px dashed white;
+}
+
+.task span{
+	font-size: 0.7em;
+}
+
+.taskList{
+	height: 100%;
+}
+
+.categoryButton{
+	width:90%;
+	left: 5%;
+	right: 5%;
+}
+
+.ellipsisText{
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.breakWord{
+	word-wrap: break-word;
+}
